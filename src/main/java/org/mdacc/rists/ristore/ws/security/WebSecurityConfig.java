@@ -1,7 +1,5 @@
 package org.mdacc.rists.ristore.ws.security;
 
-import org.mdacc.rists.ristore.ws.security.jwt.JWTAuthenticationFilter;
-import org.mdacc.rists.ristore.ws.security.jwt.JWTAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -9,16 +7,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.authentication.configurers.ldap.LdapAuthenticationProviderConfigurer;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
+import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -27,7 +29,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@PropertySource(value = { "classpath:/config/application.properties" })
+//@PropertySource(value = { "classpath:/config/application.properties" })
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 
@@ -43,8 +45,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.httpBasic()
 			.and()
 			.addFilterBefore(new CORSFilter(), ChannelProcessingFilter.class)
-			.addFilterAfter(new JWTAuthenticationFilter(authenticationManagerBean()),
-					AnonymousAuthenticationFilter.class)
 			.csrf().disable()
 			.sessionManagement().sessionCreationPolicy(
 					SessionCreationPolicy.STATELESS)
@@ -57,18 +57,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/ristore/**").authenticated()
 				.anyRequest().authenticated()
 				.and()
-			
 			.formLogin()
 				.successHandler(authenticationSuccessHandler)
 				.failureHandler(new SimpleUrlAuthenticationFailureHandler());
 //				.loginPage("/login");
 	}
 	
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
+	@Override  
+	@Bean  
+	public AuthenticationManager authenticationManagerBean() throws Exception {  
+		return super.authenticationManagerBean();  
 	}
-	
+
 	@Bean
     public RestAuthenticationSuccessHandler mySuccessHandler(){
         return new RestAuthenticationSuccessHandler();
@@ -77,10 +77,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public SimpleUrlAuthenticationFailureHandler myFailureHandler(){
         return new SimpleUrlAuthenticationFailureHandler();
     }
-	@Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
+//	@Bean
+//    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+//        return new PropertySourcesPlaceholderConfigurer();
+//    }
 	
 //	@Value("${ldap.contextSource.url:ldap://ldap.mdanderson.edu:389/dc=mdanderson,dc=edu}")
 //	private  String url;
@@ -111,9 +111,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             ldapAuthenticationProviderConfigurer
             	.userDnPatterns("cn={0},ou=institution,ou=people")
                 .userSearchBase("")
-                .contextSource(contextSource);
-            
-            auth.authenticationProvider(new JWTAuthenticationProvider());
+                .contextSource(contextSource); 
         }
     }
 

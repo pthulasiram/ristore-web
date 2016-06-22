@@ -44,6 +44,11 @@
         <artifactId>spring-security-ldap</artifactId>
     </dependency>
     <dependency>
+		<groupId>org.springframework.security.oauth</groupId>
+		<artifactId>spring-security-oauth2</artifactId>
+		<version>2.0.9.RELEASE</version>
+	</dependency>
+    <dependency>
     	<!-- Spring Security only works with ApacheDS 1.5.5 -->
         <groupId>org.apache.directory.server</groupId>
         <artifactId>apacheds-server-jndi</artifactId>

@@ -31,7 +31,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 //@PropertySource(value = { "classpath:/config/application.properties" })
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 
 	@Autowired
     private RestAuthenticationSuccessHandler authenticationSuccessHandler;

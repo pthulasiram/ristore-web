@@ -11,9 +11,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class CORSFilter implements Filter {
 	
 	@Override
@@ -28,14 +31,17 @@ public class CORSFilter implements Filter {
 	    response.setHeader("Access-Control-Max-Age", "3600");
 	    response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, "
 	    		+ "Origin,Access-Control-Request-Method, Access-Control-Request-Headers, Authorization");
-
-	    chain.doFilter(req, res);
+	    if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+	        response.setStatus(HttpServletResponse.SC_OK);
+	    } else {
+	        chain.doFilter(req, res);
+	    }
 	}
 	
 	@Override
-	public void init(FilterConfig filterConfig) {
+	public void init(FilterConfig fc) throws ServletException {
 	}
-
+	
 	@Override
 	public void destroy() {
 	}

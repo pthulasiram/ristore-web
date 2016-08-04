@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 			.httpBasic()
 			.and()
-			.addFilterBefore(new CORSFilter(), ChannelProcessingFilter.class)
+//			.addFilterBefore(new CORSFilter(), ChannelProcessingFilter.class)
 			.csrf().disable()
 			.sessionManagement().sessionCreationPolicy(
 					SessionCreationPolicy.STATELESS)
@@ -53,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	        .authenticationEntryPoint(restAuthenticationEntryPoint)
 	        .and()
 			.authorizeRequests()
+				.antMatchers("/").permitAll()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/ristore/**").authenticated()
 				.anyRequest().authenticated()

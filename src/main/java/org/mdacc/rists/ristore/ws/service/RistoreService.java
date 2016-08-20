@@ -1,11 +1,13 @@
 package org.mdacc.rists.ristore.ws.service;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.List;
 
-import org.springframework.core.io.InputStreamResource;
+import org.mdacc.rists.bdi.models.SpecimenTb;
+import org.mdacc.rists.ristore.ws.model.vo.FmReportVO;
 
 public interface RistoreService {
-	InputStream findByTRF(String trf) throws IOException;
-	InputStreamResource findByMRN(String mrn);
+
+	List<SpecimenTb> findAll();
+	
+	FmReportVO findFmReportByBlockId(String blockId);
 }

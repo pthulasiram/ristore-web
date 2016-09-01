@@ -108,7 +108,7 @@
           </execution>
         </executions>
         <configuration>
-          <finalName>uber-${artifactId}-${version}</finalName>
+          <finalName>ristoreService</finalName>
           <filters>
             <filter>
               <artifact>*:*</artifact>

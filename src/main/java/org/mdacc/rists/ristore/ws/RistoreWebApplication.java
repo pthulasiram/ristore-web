@@ -3,6 +3,7 @@ package org.mdacc.rists.ristore.ws;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +35,7 @@ public class RistoreWebApplication extends SpringBootServletInitializer
     }
     
     // following method only needed if deployed as war
-// 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-//         return application.sources(RistoreWebApplication.class);
-//     }
+ 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+         return application.sources(RistoreWebApplication.class);
+     }
 }

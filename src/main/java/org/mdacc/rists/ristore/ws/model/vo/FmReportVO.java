@@ -13,6 +13,7 @@ public class FmReportVO {
 	private String frFullName;
 	private String frReportId;
 	private String filepath;
+	private String mrn;
 	
 	
 	public FmReportVO() {
@@ -27,6 +28,7 @@ public class FmReportVO {
 		this.frFacilityName = fmReport.getFrFacilityName();
 		this.frFullName = fmReport.getFrFullName();
 		this.frReportId = fmReport.getFrReportId();
+		this.mrn = fmReport.getSpecimenTb().getMrn();
 	}
 
 	public String getFrBlockId() {
@@ -83,6 +85,22 @@ public class FmReportVO {
 
 	public void setFrReportId(String frReportId) {
 		this.frReportId = frReportId;
+	}
+
+	public String getFilepath() {
+		return filepath;
+	}
+
+	public void setFilepath(String filepath) {
+		this.filepath = filepath;
+	}
+
+	public String getMrn() {
+		return mrn;
+	}
+
+	public void setMrn(String mrn) {
+		this.mrn = mrn;
 	}
 	
 	

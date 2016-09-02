@@ -1,11 +1,7 @@
 package org.mdacc.rists.ristore.ws.api;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.mdacc.rists.bdi.models.FmReportTb;
-import org.mdacc.rists.bdi.models.SpecimenTb;
-import org.mdacc.rists.ristore.ws.model.Foundation;
 import org.mdacc.rists.ristore.ws.model.vo.FmReportVO;
 import org.mdacc.rists.ristore.ws.service.RistoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +26,12 @@ public class RistoreController {
 			value = "/ristore/foundation/",
 			method = RequestMethod.GET,
 			produces = "application/json")
-	public ResponseEntity<List<SpecimenTb>> getAll() {
-		List<SpecimenTb> specimens = ristoreService.findAll();
-		if (specimens == null) {
-			return new ResponseEntity<List<SpecimenTb>>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<List<FmReportVO>> getAllFmReports() {
+		List<FmReportVO> reports = ristoreService.findAllFmReports();
+		if (reports == null) {
+			return new ResponseEntity<List<FmReportVO>>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<List<SpecimenTb>>(specimens, HttpStatus.OK);
+		return new ResponseEntity<List<FmReportVO>>(reports, HttpStatus.OK);
 	}
 	
 	@RequestMapping(
@@ -49,21 +45,29 @@ public class RistoreController {
 		}
 		return new ResponseEntity<FmReportVO>(fmReportVO, HttpStatus.OK);
 	}
-//	@RequestMapping( 
-//			value = "/ristore/foundation/{trf}", 
-//			method = RequestMethod.GET, 
-//			produces = "application/xml")
-//	public ResponseEntity<InputStreamResource> downloadXMLFile(@PathVariable String trf) throws IOException {
-//		InputStream xmlInputStream = ristoreService.findByTRF(trf);
-//		HttpHeaders headers = new HttpHeaders();
-//	    headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-//	    headers.add("Pragma", "no-cache");
-//	    headers.add("Expires", "0");
-//		
-//		return ResponseEntity
-//	            .ok()
-//	            .headers(headers)
-//	            .contentType(MediaType.parseMediaType("application/octet-stream"))
-//	            .body(new InputStreamResource(xmlInputStream));
-//	}
+	
+	@RequestMapping(
+			value = "/ristore/foundation/reportid/{reportid}",
+			method = RequestMethod.GET,
+			produces = "application/json")
+	public ResponseEntity<FmReportVO> getFmReportByReportId(@PathVariable String reportid) {
+		FmReportVO fmReportVO = ristoreService.findFmReportByReportId(reportid);
+		if (fmReportVO == null) {
+			return new ResponseEntity<FmReportVO>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<FmReportVO>(fmReportVO, HttpStatus.OK);
+	}
+
+	@RequestMapping(
+			value = "/ristore/foundation/mrn/{mrn}",
+			method = RequestMethod.GET,
+			produces = "application/json")
+	public ResponseEntity<List<FmReportVO>> getFmReportByMrn(@PathVariable String mrn) {
+		List<FmReportVO> fmReports = ristoreService.findFmReportByMrn(mrn);
+		if (fmReports == null) {
+			return new ResponseEntity<List<FmReportVO>>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<List<FmReportVO>>(fmReports, HttpStatus.OK);
+	}
+
 }

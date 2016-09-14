@@ -7,9 +7,7 @@ import org.mdacc.rists.bdi.models.FmReportTb;
 public class FmReportVO {
 	private String frBlockId;
 	private Date frCollectionDate;
-	private String frCopiedPhysician;
 	private String frDiagnosis;
-	private String frFacilityName;
 	private String frFullName;
 	private String frReportId;
 	private String filepath;
@@ -23,9 +21,7 @@ public class FmReportVO {
 	public FmReportVO(FmReportTb fmReport) {
 		this.frBlockId = fmReport.getFrBlockId();
 		this.frCollectionDate = fmReport.getFrCollectionDate();
-		this.frCopiedPhysician = fmReport.getFrCopiedPhysician();
 		this.frDiagnosis = fmReport.getFrDiagnosis();
-		this.frFacilityName = fmReport.getFrFacilityName();
 		this.frFullName = fmReport.getFrFullName();
 		this.frReportId = fmReport.getFrReportId();
 		this.mrn = fmReport.getSpecimenTb().getMrn();
@@ -47,28 +43,12 @@ public class FmReportVO {
 		this.frCollectionDate = frCollectionDate;
 	}
 
-	public String getFrCopiedPhysician() {
-		return frCopiedPhysician;
-	}
-
-	public void setFrCopiedPhysician(String frCopiedPhysician) {
-		this.frCopiedPhysician = frCopiedPhysician;
-	}
-
 	public String getFrDiagnosis() {
 		return frDiagnosis;
 	}
 
 	public void setFrDiagnosis(String frDiagnosis) {
 		this.frDiagnosis = frDiagnosis;
-	}
-
-	public String getFrFacilityName() {
-		return frFacilityName;
-	}
-
-	public void setFrFacilityName(String frFacilityName) {
-		this.frFacilityName = frFacilityName;
 	}
 
 	public String getFrFullName() {
@@ -102,7 +82,4 @@ public class FmReportVO {
 	public void setMrn(String mrn) {
 		this.mrn = mrn;
 	}
-	
-	
-
 }

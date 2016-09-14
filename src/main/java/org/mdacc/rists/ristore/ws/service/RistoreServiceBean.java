@@ -37,6 +37,7 @@ public class RistoreServiceBean implements RistoreService {
 			reportVo.setFilepath(filepath);
 			fmReports.add(reportVo);
 		}
+		
 		return fmReports;
 	}
 	
@@ -48,6 +49,7 @@ public class RistoreServiceBean implements RistoreService {
 		}
 		FmReportVO reportVo = new FmReportVO(report);
 		String filepath = fileLoadRepository.findUriByFileLoadId(report.getFileLoadId().longValue());
+		System.out.println(filepath);
 		reportVo.setFilepath(filepath);
 		return reportVo;
 	}

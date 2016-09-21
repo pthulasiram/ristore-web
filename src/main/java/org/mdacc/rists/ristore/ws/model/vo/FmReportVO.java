@@ -10,7 +10,7 @@ public class FmReportVO {
 	private String frDiagnosis;
 	private String frFullName;
 	private String frReportId;
-	private String filepath;
+	private String filename;
 	private String mrn;
 	
 	
@@ -67,12 +67,12 @@ public class FmReportVO {
 		this.frReportId = frReportId;
 	}
 
-	public String getFilepath() {
-		return filepath;
+	public String getFilename() {
+		return filename;
 	}
 
-	public void setFilepath(String filepath) {
-		this.filepath = filepath;
+	public void setFilename(String filepath) {
+		this.filename = filepath;
 	}
 
 	public String getMrn() {

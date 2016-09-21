@@ -33,41 +33,47 @@ public class RistoreServiceBean implements RistoreService {
 		List<FmReportVO> fmReports = new ArrayList<FmReportVO>();
 		for (FmReportTb report : reports) {
 			FmReportVO reportVo = new FmReportVO(report);
-			String filepath = fileLoadRepository.findUriByFileLoadId(report.getFileLoadId().longValue());
-			reportVo.setFilepath(filepath);
+			String filename = getBase(fileLoadRepository.findUriByFileLoadId(report.getFileLoadId().longValue()));
+			reportVo.setFilename(filename);
 			fmReports.add(reportVo);
 		}
-		
 		return fmReports;
 	}
-	
+
 	@Override
-	public FmReportVO findFmReportByBlockId(String blockId) {
-		FmReportTb report = fmReportRepository.findByBlockId(blockId);
-		if (report == null) {
+	public List<FmReportVO> findFmReportsByBlockId(String blockId) {
+		List<FmReportTb> reports = fmReportRepository.findByBlockId(blockId);
+		if (reports == null) {
 			return null;
 		}
-		FmReportVO reportVo = new FmReportVO(report);
-		String filepath = fileLoadRepository.findUriByFileLoadId(report.getFileLoadId().longValue());
-		System.out.println(filepath);
-		reportVo.setFilepath(filepath);
-		return reportVo;
+		List<FmReportVO> fmReports = new ArrayList<FmReportVO>();
+		for (FmReportTb report : reports) {
+			FmReportVO reportVo = new FmReportVO(report);
+			String filename = getBase(fileLoadRepository.findUriByFileLoadId(report.getFileLoadId().longValue()));
+			reportVo.setFilename(filename);
+			fmReports.add(reportVo);
+		}
+		return fmReports;
 	}
 
 	@Override
-	public FmReportVO findFmReportByReportId(String reportId) {
-		FmReportTb report = fmReportRepository.findByReportId(reportId);
-		if (report == null) {
+	public List<FmReportVO> findFmReportsByReportId(String reportId) {
+		List<FmReportTb> reports = fmReportRepository.findByReportId(reportId);
+		if (reports == null) {
 			return null;
 		}
-		FmReportVO reportVo = new FmReportVO(report);
-		String filepath = fileLoadRepository.findUriByFileLoadId(report.getFileLoadId().longValue());
-		reportVo.setFilepath(filepath);
-		return reportVo;
+		List<FmReportVO> fmReports = new ArrayList<FmReportVO>();
+		for (FmReportTb report : reports) {
+			FmReportVO reportVo = new FmReportVO(report);
+			String filename = getBase(fileLoadRepository.findUriByFileLoadId(report.getFileLoadId().longValue()));
+			reportVo.setFilename(filename);
+			fmReports.add(reportVo);
+		}
+		return fmReports;
 	}
 
 	@Override
-	public List<FmReportVO> findFmReportByMrn(String mrn) {
+	public List<FmReportVO> findFmReportsByMrn(String mrn) {
 		List<SpecimenTb> specimens = specimenRepository.findFmSpecimenByMrn(mrn);
 		if (specimens == null) {
 			return null;
@@ -77,12 +83,25 @@ public class RistoreServiceBean implements RistoreService {
 			FmReportTb report = specimen.getFmReportTb();
 			if (report.getDeleteTs() == null) {
 				FmReportVO reportVo = new FmReportVO(report);
-				String filepath = fileLoadRepository.findUriByFileLoadId(report.getFileLoadId().longValue());
-				reportVo.setFilepath(filepath);
+				String filename = getBase(fileLoadRepository.findUriByFileLoadId(report.getFileLoadId().longValue()));
+				reportVo.setFilename(filename);
 				fmReports.add(reportVo);
 			}
 		}
 		return fmReports;
+	}
+	
+	private String getBase(String path) {
+		int indexSlash = path.lastIndexOf('/');
+		int indexDot = path.lastIndexOf('.');
+		if (indexSlash > 1) {
+			if (indexDot > 1) {
+				return path.substring(indexSlash + 1, indexDot);
+			} else {
+				return path.substring(indexSlash + 1);
+			}
+		}
+		return null;
 	}
 
 }

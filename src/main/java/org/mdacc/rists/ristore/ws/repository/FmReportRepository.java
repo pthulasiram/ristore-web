@@ -17,9 +17,9 @@ public interface FmReportRepository extends JpaRepository<FmReportTb, Long> {
 	
 	@EntityGraph("FmReportGraph")
 	@Query("select f from FmReportTb f where f.frBlockId=?1 and f.deleteTs is null")
-	public FmReportTb findByBlockId(String blockId);
+	public List<FmReportTb> findByBlockId(String blockId);
 	
 	@EntityGraph("FmReportGraph")
 	@Query("select f from FmReportTb f where f.frReportId=?1 and f.deleteTs is null")
-	public FmReportTb findByReportId(String reportId);	
+	public List<FmReportTb> findByReportId(String reportId);	
 }

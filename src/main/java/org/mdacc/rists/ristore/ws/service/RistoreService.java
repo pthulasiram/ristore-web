@@ -7,7 +7,7 @@ import org.mdacc.rists.ristore.ws.model.vo.FmReportVO;
 public interface RistoreService {
 
 	List<FmReportVO> findAllFmReports();
-	FmReportVO findFmReportByBlockId(String blockId);
-	FmReportVO findFmReportByReportId(String reportId);
-	List<FmReportVO> findFmReportByMrn(String mrn);
+	List<FmReportVO> findFmReportsByBlockId(String blockId);
+	List<FmReportVO> findFmReportsByReportId(String reportId);
+	List<FmReportVO> findFmReportsByMrn(String mrn);
 }
